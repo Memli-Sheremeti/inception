@@ -6,19 +6,21 @@
 #    By: mshereme <mshereme@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 14:03:56 by mshereme          #+#    #+#              #
-#    Updated: 2024/07/17 16:15:08 by mshereme         ###   ########.fr        #
+#    Updated: 2024/07/17 18:17:28 by mshereme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-clean: 
-	docker system prune -a -f
 
 build:
+	mkdir -p /home/mshereme/data/mariadb && mkdir -p /home/mshereme/data/wordpress
 	cd srcs && docker compose up --build
 
+clean: 
+	@- docker system prune -a -f
+	@- docker volume rm mariadb wordpress
+	@- sudo rm -rf  /home/mshereme/data/mariadb
+	@- sudo rm -rf /home/mshereme/data/wordpress
+	
 rebuild: clean build
-
-# run:
-#    cd $(PATH`) && docker run --rm -p 82:80 basic
 
 rerun: rebuild run

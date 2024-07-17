@@ -6,9 +6,21 @@ networks:
     driver: bridge
 
 volumes:
-  mariadb:
-    name: volume_mariadb
-    
+  # mariadb:
+  #   name: mariadb
+  #   driver: local
+  #   driver_opts:
+  #     type: 'none'
+  #     o: 'bind'
+  #     device: '/home/mshereme/data/mariadb'
+  wordpress:
+    name: wordpress
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/mshereme/data/wordpress'
+
 services:
   nginx:
     build: requirements/nginx/.
@@ -17,6 +29,8 @@ services:
       - "443:443"
     networks: 
       - inception
+    volumes:
+      - wordpress:/var/www/html/
   wordpress:
     build: requirements/wordpress/.
     container_name: wordpress
@@ -24,3 +38,5 @@ services:
       - inception
     expose:
       - "9000"
+    volumes:
+      - wordpress:/var/www/html/

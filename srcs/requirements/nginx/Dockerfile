@@ -6,7 +6,7 @@
 #    By: mshereme <mshereme@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/15 17:48:37 by mshereme          #+#    #+#              #
-#    Updated: 2024/07/17 16:28:03 by mshereme         ###   ########.fr        #
+#    Updated: 2024/07/17 17:34:40 by mshereme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ RUN mkdir -p /var/run/nginx
 
 COPY conf/nginx.conf /etc/nginx/nginx.conf
 
-RUN mkdir -p /var/html/ && chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
+RUN mkdir -p /var/www/html/ && chmod 755 /var/www/html && chown -R www-data:www-data /var/www/html
 
 EXPOSE 443
 
