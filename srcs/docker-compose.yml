@@ -5,6 +5,10 @@ networks:
     name: inception
     driver: bridge
 
+volumes:
+  mariadb:
+    name: volume_mariadb
+    
 services:
   nginx:
     build: requirements/nginx/.

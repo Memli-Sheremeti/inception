@@ -6,7 +6,7 @@
 #    By: mshereme <mshereme@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/16 14:11:03 by mshereme          #+#    #+#              #
-#    Updated: 2024/07/17 16:09:27 by mshereme         ###   ########.fr        #
+#    Updated: 2024/07/17 16:46:30 by mshereme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,6 +19,8 @@ RUN apt-get install -y php7.4-fpm
 RUN mkdir -p /run/php && chmod 755 /run/php
 
 EXPOSE 9000
+
+COPY conf/www.conf /etc/php/7.4/fpm/pool.d/.
 
 CMD ["php-fpm7.4", "-F"]
 
