@@ -1,0 +1,22 @@
+
+
+networks:
+  inception:
+    name: inception
+    driver: bridge
+
+services:
+  nginx:
+    build: requirements/nginx/.
+    container_name: nginx
+    ports:
+      - "443:443"
+    networks: 
+      - inception
+  wordpress:
+    build: requirements/wordpress/.
+    container_name: wordpress
+    networks:
+      - inception
+    expose:
+      - "9000"
