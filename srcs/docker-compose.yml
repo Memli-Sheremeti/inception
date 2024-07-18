@@ -1,18 +1,22 @@
-
-
 networks:
   inception:
     name: inception
     driver: bridge
 
+secrets:
+  db_password:
+    file: secrets/db_password.txt
+  db_root_password:
+    file: secrets/db_root_password.txt
+
 volumes:
-  # mariadb:
-  #   name: mariadb
-  #   driver: local
-  #   driver_opts:
-  #     type: 'none'
-  #     o: 'bind'
-  #     device: '/home/mshereme/data/mariadb'
+  mariadb:
+    name: mariadb
+    driver: local
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '/home/mshereme/data/mariadb'
   wordpress:
     name: wordpress
     driver: local
@@ -31,6 +35,19 @@ services:
       - inception
     volumes:
       - wordpress:/var/www/html/
+  mariadb:
+    build: requirements/mariadb/.
+    container_name: mariadb
+    ports:
+      - "3306"
+    networks:
+      - inception
+    volumes:
+      - mariadb:/var/lib/mysql
+    env_file: .env
+    secrets:
+      - db_password
+      - db_root_password
   wordpress:
     build: requirements/wordpress/.
     container_name: wordpress
@@ -40,3 +57,7 @@ services:
       - "9000"
     volumes:
       - wordpress:/var/www/html/
+    env_file: .env
+    secrets:
+      - db_password
+      - db_root_password
