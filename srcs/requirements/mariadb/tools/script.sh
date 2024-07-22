@@ -3,7 +3,6 @@
 service mariadb start
 
 sleep 3
-# systemctl status mariadb
 
 mysql -e "CREATE DATABASE IF NOT EXISTS ${SQL_DATABASE};"
 

@@ -8,6 +8,8 @@ secrets:
     file: secrets/db_password.txt
   db_root_password:
     file: secrets/db_root_password.txt
+  wp_password:
+    file: secrets/wp_password.txt
 
 volumes:
   mariadb:
@@ -28,15 +30,27 @@ volumes:
 services:
   nginx:
     build: requirements/nginx/.
+    depends_on:
+      wordpress:
+        condition: service_healthy
     container_name: nginx
+    restart: always
     ports:
       - "443:443"
     networks: 
       - inception
     volumes:
       - wordpress:/var/www/html/
+
   mariadb:
     build: requirements/mariadb/.
+    healthcheck:
+      test: mysqladmin ping
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
+    restart: always
     container_name: mariadb
     ports:
       - "3306"
@@ -48,8 +62,19 @@ services:
     secrets:
       - db_password
       - db_root_password
+
   wordpress:
     build: requirements/wordpress/.
+    depends_on:
+      mariadb:
+        condition: service_healthy
+    healthcheck:
+      test: netstat -an | grep 9000 > /dev/null; if [ $$? != 0 ]; then exit 1; fi;
+      interval: 10s
+      retries: 5
+      start_period: 10s
+      timeout: 10s
+    restart: always
     container_name: wordpress
     networks:
       - inception
@@ -61,3 +86,4 @@ services:
     secrets:
       - db_password
       - db_root_password
+      - wp_password
