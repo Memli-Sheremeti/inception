@@ -61,7 +61,6 @@ services:
     env_file: .env
     secrets:
       - db_password
-      - db_root_password
 
   wordpress:
     build: requirements/wordpress/.
