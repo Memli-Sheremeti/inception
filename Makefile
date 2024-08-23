@@ -6,7 +6,7 @@
 #    By: mshereme <mshereme@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/07/17 14:03:56 by mshereme          #+#    #+#              #
-#    Updated: 2024/07/22 16:29:20 by mshereme         ###   ########.fr        #
+#    Updated: 2024/07/22 18:18:11 by mshereme         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,6 +26,4 @@ fclean: clean
 mariadb:
 	@- docker exec -it mariadb /bin/bash		
 	
-rebuild: clean build
-
-rerun: rebuild run
+rebuild: fclean build
